@@ -16,7 +16,7 @@ public record  ProductosRequest(
                 @Size(min = 5,max = 50,message = "El nombre debe tener entre 5 y 30 caracteres")
         String Nombre,
         @Schema(description = "Categoria del producto",example = "Electrónica")
-        @NotNull(message = "La categoria es requerida")
+        @NotBlank(message = "La categoria es requerida")
         String categoria,
         @Schema(description = "Precio del producto",example = "15999.99")
         @NotNull(message = "El precio es requerido")

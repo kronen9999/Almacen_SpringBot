@@ -2,8 +2,10 @@ package com.steven.almacen.utils;
 
 import com.steven.almacen.dto.productos.ProductosRequest;
 import com.steven.almacen.entities.Producto;
+import com.steven.almacen.entities.Sucursal;
 import com.steven.almacen.enums.Categoria;
 import com.steven.almacen.repositories.ProductoRepository;
+import com.steven.almacen.repositories.SucursalRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ProductosLoader implements CommandLineRunner {
 
     private  final ProductoRepository productoRepository;
+    private final SucursalRepository repository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -33,6 +36,14 @@ public class ProductosLoader implements CommandLineRunner {
             log.info("Metodo cargado");
         }
 
+        if (repository.count()==0)
+        {
+            repository.saveAll(List.of(
+                    new Sucursal(null,"Sucursal centro","Av Principal 123"),
+                    new Sucursal(null,"Sucursal Norte","Calle norte 123"),
+                    new Sucursal(null,"Sucursal Sur","Av Principal 123")
+            ));
+        }
 
     }
 
