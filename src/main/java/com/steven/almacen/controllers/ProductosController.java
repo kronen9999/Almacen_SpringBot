@@ -50,7 +50,7 @@ public class ProductosController {
     @Operation(summary = "Registrar producto",tags = {"Productos - Gestion"})
 
     public ResponseEntity <ProductosResponse> registrar
-            (@RequestBody ProductosRequest request)
+            (@Valid @RequestBody ProductosRequest request)
     {
         return  ResponseEntity.status(201).body(productosService.registrar(request));
     }
