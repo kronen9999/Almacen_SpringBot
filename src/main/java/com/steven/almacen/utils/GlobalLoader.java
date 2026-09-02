@@ -1,6 +1,5 @@
 package com.steven.almacen.utils;
 
-import com.steven.almacen.dto.productos.ProductosRequest;
 import com.steven.almacen.entities.Producto;
 import com.steven.almacen.entities.Sucursal;
 import com.steven.almacen.enums.Categoria;
@@ -17,11 +16,10 @@ import java.util.List;
 @Component
 @Slf4j
 @AllArgsConstructor
-public class ProductosLoader implements CommandLineRunner {
+public class GlobalLoader implements CommandLineRunner {
 
     private  final ProductoRepository productoRepository;
-    private final SucursalRepository repository;
-
+    private final SucursalRepository sucursalRepository;
     @Override
     public void run(String... args) throws Exception {
 
@@ -33,16 +31,18 @@ public class ProductosLoader implements CommandLineRunner {
                     new Producto(null,"Monitor", Categoria.ELECTRONICA, BigDecimal.valueOf(2500),50)
             ));
 
-            log.info("Metodo cargado");
+            log.info("Insercion de elementos de prueba para la tabla de productos cargados correctamente");
         }
 
-        if (repository.count()==0)
+        if (sucursalRepository.count()==0)
         {
-            repository.saveAll(List.of(
+            sucursalRepository.saveAll(List.of(
                     new Sucursal(null,"Sucursal centro","Av Principal 123"),
                     new Sucursal(null,"Sucursal Norte","Calle norte 123"),
                     new Sucursal(null,"Sucursal Sur","Av Principal 123")
             ));
+
+            log.info("Insercion de elementos de prueba para la tabla de sucursal cargados correctamente");
         }
 
     }
