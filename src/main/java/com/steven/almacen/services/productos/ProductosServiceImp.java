@@ -28,7 +28,7 @@ public class ProductosServiceImp implements ProductosService{
     private final ProductoRepository productoRepository;
 
 
-
+    @Transactional(readOnly = true)
     @Override
     public List<ProductosResponse> listar(String nombre, String categoria, BigDecimal precioMin, BigDecimal precioMax) {
         log.info("Listando todos los productos ");
@@ -43,8 +43,10 @@ public class ProductosServiceImp implements ProductosService{
         return productoRepository.obtenerListaPersonalizada(nombre,categoriaEnum,precioMin,precioMax).stream().map(productoMapper::entidadAResponse).toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ProductosResponse ObtenerPorId(Long id) {
+        log.info("Obteniendo producto por id " + id);
         return productoMapper.entidadAResponse(obtenerProductoOException(id));
     }
 
@@ -98,14 +100,17 @@ public class ProductosServiceImp implements ProductosService{
     private void validarMenorMayor (BigDecimal precioMin, BigDecimal precioMax)
     {
 
+        log.info("Verificando que el precio minimo no sea mayor al precio maximo");
         if (precioMin==null||precioMax==null) return;
 
         if (precioMin.compareTo(precioMax)==1)
         {
-            log.error("Aqui entro el codigo");
+            log.error("Se produjo un error el valor para el min es {} y para el max es {}",precioMin,precioMax);
             throw  new ConflictoMayorMenor("El numero menor no puede ser mayor al numero menor");
 
         }
+
+        log.info("validacion correcta");
 
 
     }

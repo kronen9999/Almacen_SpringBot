@@ -26,6 +26,7 @@ public class SucursalesServicioImp implements  SucursalService{
     @Override
     @Transactional(readOnly = true)
     public List<SucursalResponse> listar() {
+        log.info("Listando las sucursales");
         return repository.findAll().stream().map(mapper::entidadAResponse).toList();
     }
 
@@ -33,12 +34,14 @@ public class SucursalesServicioImp implements  SucursalService{
     @Transactional(readOnly = true)
     public SucursalResponse obtenerPorId(Long id) {
 
+        log.info("Obteninedo la sucursal por el id : {}",id);
         return mapper.entidadAResponse(buscarPorId(id));
 
     }
 
     @Override
     public SucursalResponse registrar(SucursalRequest request) {
+        log.info("Registrando una nueva sucursal");
         Sucursal sucursal = mapper.requestAEntidad(request);
         validarDatosUnicos(request);
         repository.save(sucursal);
@@ -58,6 +61,8 @@ public class SucursalesServicioImp implements  SucursalService{
 
     @Override
     public void eliminar(Long id) {
+
+        log.info("Eliminando sucursal con id : {}",id);
     Sucursal sucursal =buscarPorId(id);
 
     repository.delete(sucursal);
@@ -83,6 +88,7 @@ public class SucursalesServicioImp implements  SucursalService{
     }
 
     private Sucursal obtenerSucursalException(Long id){
+        log.info("Obteniendo la sucursal por el id :  {}",id);
         return repository.findById(id).orElseThrow(()->new RecursoNoEncontradoException("No se encontro sucursal"));
 
     }

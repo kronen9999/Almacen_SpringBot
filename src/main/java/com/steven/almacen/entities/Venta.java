@@ -7,11 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,6 +61,15 @@ public class Venta {
             throw  new IllegalArgumentException( "La venta ya esta cancelada");
 
         estadoVenta=EstadoVenta.CANCELADA;
+    }
+
+    public BigDecimal getTotal()
+    {
+        log.info("Calculando precio total");
+        return detalleVentas.stream().map(detalleVenta -> detalleVenta.getPrecioProducto().multiply(BigDecimal.valueOf(detalleVenta.getCantidadProducto()))).reduce(BigDecimal.ZERO,BigDecimal::add);
+
+
+
     }
 
 }

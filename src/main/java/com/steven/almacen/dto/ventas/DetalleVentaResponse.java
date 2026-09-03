@@ -10,7 +10,7 @@ public record DetalleVentaResponse(@Schema(description = "ID del producto",examp
                                    @Schema(description = "Nombre del producto",example = "Laptop Gamer")
                                    String nombreProducto,
                                    @Schema(description = "Cantidad del producto",example = "20")
-                                   Integer CantidadProducto,
+                                   Integer cantidadProducto,
                                    @Schema(description = "Percio del producto",example = "1993.12")
                                    BigDecimal precioProducto,
                                    @Schema(description = "Subtotal del producto",example = "15000.00")

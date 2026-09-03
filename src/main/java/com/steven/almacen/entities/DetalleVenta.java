@@ -30,7 +30,7 @@ public class DetalleVenta {
     private Producto producto;
 
     @Column(name = "CANTIDAD_PRODUCTO",nullable = false)
-    private  Integer cantidadPrecio;
+    private  Integer cantidadProducto;
 
     @Column(name = "PRECIO_PRODUCTO",nullable = false)
     private BigDecimal precioProducto;
@@ -40,5 +40,12 @@ public class DetalleVenta {
         if (venta==null) throw  new IllegalArgumentException("La venta es requerida");
 
         this.venta=venta;
+    }
+
+    public BigDecimal getSubtotal ()
+    {
+
+        return precioProducto.multiply(BigDecimal.valueOf(cantidadProducto));
+
     }
 }
