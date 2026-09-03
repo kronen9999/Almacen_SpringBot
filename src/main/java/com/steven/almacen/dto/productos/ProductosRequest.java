@@ -24,8 +24,8 @@ public record  ProductosRequest(
         @Schema(description = "Precio del producto",example = "15999.99")
         @NotNull(message = "El precio es requerido")
         @Positive(message = "El precio debe de ser positivo")
-
         BigDecimal precio,
+
         @Schema(description = "Cantidad disponible del producto",example = "300")
         @NotNull(message = "La cantidad es requerida")
         @Positive(message = "La cantidad  debe de ser positiva")

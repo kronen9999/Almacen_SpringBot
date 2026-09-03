@@ -4,6 +4,7 @@ import com.steven.almacen.dto.productos.ProductosRequest;
 import com.steven.almacen.dto.productos.ProductosResponse;
 import com.steven.almacen.entities.Producto;
 import com.steven.almacen.enums.Categoria;
+import com.steven.almacen.exceptions.ConflictoMayorMenor;
 import com.steven.almacen.exceptions.RecursoNoEncontradoException;
 import com.steven.almacen.mappers.ProductoMapper;
 import com.steven.almacen.repositories.ProductoRepository;
@@ -32,7 +33,14 @@ public class ProductosServiceImp implements ProductosService{
     public List<ProductosResponse> listar(String nombre, String categoria, BigDecimal precioMin, BigDecimal precioMax) {
         log.info("Listando todos los productos ");
 
-        return productoRepository.findAll().stream().map(productoMapper::entidadAResponse).toList();
+        Categoria categoriaEnum = categoria == null || categoria.isBlank()?null:Categoria.obtenerCategoriaPorDescripcion(categoria);
+
+
+            validarMenorMayor(precioMin,precioMax);
+
+
+
+        return productoRepository.obtenerListaPersonalizada(nombre,categoriaEnum,precioMin,precioMax).stream().map(productoMapper::entidadAResponse).toList();
     }
 
     @Override
@@ -86,4 +94,21 @@ public class ProductosServiceImp implements ProductosService{
 
        return  productoRepository.findById(id).orElseThrow(()-> new RecursoNoEncontradoException("Id no encontrado con id "+id));
     }
+
+    private void validarMenorMayor (BigDecimal precioMin, BigDecimal precioMax)
+    {
+
+        if (precioMin==null||precioMax==null) return;
+
+        if (precioMin.compareTo(precioMax)==1)
+        {
+            log.error("Aqui entro el codigo");
+            throw  new ConflictoMayorMenor("El numero menor no puede ser mayor al numero menor");
+
+        }
+
+
+    }
+
+
 }
