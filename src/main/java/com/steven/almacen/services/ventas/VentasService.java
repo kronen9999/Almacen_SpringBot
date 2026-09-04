@@ -17,5 +17,4 @@ public interface VentasService {
 
     VentaResponse cancelar(Long id);
 
-
 }
