@@ -9,6 +9,8 @@ public interface VentasService {
 
     List<VentaResponse> listar();
 
+    List<VentaResponse> listarCanceladas();
+
     VentaResponse obtenerPorIdActiva(Long id);
 
     VentaResponse registrar (VentaRequest request);

@@ -52,6 +52,8 @@ public class Producto {
 
         this.cantidad-=cantidad;
 
+
+
     }
 
     public void  validarDatos(String nombre, Categoria categoria, BigDecimal precio, Integer cantidad) {

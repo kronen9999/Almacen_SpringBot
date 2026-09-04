@@ -37,14 +37,28 @@ public class VentasServiceImp implements VentasService{
 
 
 
+    @Transactional(readOnly = true)
     @Override
     public List<VentaResponse> listar() {
-        return List.of();
+        return  listarPorEstado(EstadoVenta.REGISTRADA);
+
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List<VentaResponse> listarCanceladas() {
+
+        return listarPorEstado(EstadoVenta.CANCELADA);
+
     }
 
+    @Transactional(readOnly = true)
     @Override
     public VentaResponse obtenerPorIdActiva(Long id) {
-        return null;
+
+         return ventaMapper.entidadAResponse(ventaRepository.findByIdAndEstadoVenta(id,EstadoVenta.REGISTRADA).orElseThrow(
+                 ()-> new RecursoNoEncontradoException("No se ha encontrado la venta con id :"+ id)
+         ));
+
     }
 
 
@@ -79,7 +93,25 @@ public class VentasServiceImp implements VentasService{
 
     @Override
     public VentaResponse cancelar(Long id) {
-        return null;
+
+        Venta venta= buscarVentaPorId(id);
+
+        venta.cancelar();
+
+        List <DetalleVenta> detalleVentas=venta.getDetalleVentas();
+
+        detalleVentas.forEach(detalleVenta -> {
+
+            Producto producto = buscarProductoPorId(detalleVenta.getProducto().getId());
+
+            producto.aumentarCantidad(detalleVenta.getCantidadProducto());
+
+        });
+
+        ventaRepository.save(venta);
+
+        return ventaMapper.entidadAResponse(venta);
+
     }
 
     private Sucursal buscarSucursalExistentePorId(Long id )
@@ -101,6 +133,26 @@ public class VentasServiceImp implements VentasService{
                 ()-> new RecursoNoEncontradoException("No se encontro el producto con id "+id
                 )
         );
+
+    }
+
+    private Venta buscarVentaPorId(Long id)
+    {
+        log.info("Buscando venta");
+
+        return ventaRepository.findById(id).orElseThrow(()-> new RecursoNoEncontradoException("No se ha encontrado la venta con id : "+id));
+
+    }
+
+    private List <VentaResponse> listarPorEstado(EstadoVenta estadoVenta)
+    {
+
+        log.info("Buscando ventas por estado : {}",estadoVenta.toString());
+
+        List <Venta> venta = ventaRepository.findByEstadoVenta(estadoVenta);
+
+        return venta.stream().map(ventaMapper::entidadAResponse).toList();
+
 
     }
 }

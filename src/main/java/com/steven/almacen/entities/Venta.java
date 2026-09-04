@@ -56,7 +56,10 @@ public class Venta {
 
     public void cancelar ()
     {
+
+        log.info("Cancelando venta");
         if (estadoVenta==EstadoVenta.CANCELADA)
+
 
             throw  new IllegalArgumentException( "La venta ya esta cancelada");
 
