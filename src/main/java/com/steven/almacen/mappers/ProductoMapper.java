@@ -4,9 +4,12 @@ import com.steven.almacen.dto.productos.ProductosRequest;
 import com.steven.almacen.dto.productos.ProductosResponse;
 import com.steven.almacen.entities.Producto;
 import com.steven.almacen.enums.Categoria;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ProductoMapper {
 
     public Producto requestAEntidad(ProductosRequest request, Categoria categoria)
@@ -21,6 +24,8 @@ public class ProductoMapper {
                 .precio(request.precio())
                 .cantidad(request.cantidad())
                 .build();
+
+
     }
 
     public ProductosResponse entidadAResponse(Producto producto)

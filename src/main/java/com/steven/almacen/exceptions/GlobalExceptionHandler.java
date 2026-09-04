@@ -82,5 +82,11 @@ public class GlobalExceptionHandler {
                 .body(new CustomErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         "Error interno del servidor. Por favor, contacte al administrador."));
     }
+    @ExceptionHandler(ConflictoMayorMenor.class)
+    public ResponseEntity<CustomErrorResponse> handleConflictoMayorMenorException(ConflictoMayorMenor e) {
+        log.error("Error el numero mayor no puede ser mayor al numero menor: {}", e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new CustomErrorResponse(HttpStatus.CONFLICT.value(),e.getMessage()));
+    }
 
 }

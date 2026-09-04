@@ -8,9 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
+@Slf4j
 @Entity
 @Table(name="PRODUCTOS")
 @NoArgsConstructor
@@ -51,7 +53,7 @@ public class Producto {
         this.cantidad-=cantidad;
 
 
-        this.cantidad+=cantidad;
+
     }
 
     public void  validarDatos(String nombre, Categoria categoria, BigDecimal precio, Integer cantidad) {
@@ -62,9 +64,9 @@ public class Producto {
             throw  new IllegalArgumentException("La categoria es requerida");
         }
 
-        ValoresNumericosUtils.validarBigDecimalPositivo(precio,"El precio es requerido y debe de ser positiva");
+        ValoresNumericosUtils.validarBigDecimalPositivo(precio,"El precio es requerido y debe de ser positivo");
 
-        ValoresNumericosUtils.validarEnteroPositivo(cantidad,"La cantidad es requerida y debe de ser positiva");
+        ValoresNumericosUtils.validarEnteroPositivo(cantidad,"La cantidad es requerida y debe de ser positivo");
     }
 
     public void  actualizar(String nombre, Categoria categoria, BigDecimal precio, Integer cantidad) {

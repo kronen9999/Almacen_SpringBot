@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/sucursales")
 @AllArgsConstructor
 @Validated
-@Tag(name = "Enpoints scurusal",description = "Endpoints de sucursal")
+@Tag(name = "Sucursal",description = "Endpoints de sucursal")
 public class SucursalController {
 
     private final SucursalService service;
