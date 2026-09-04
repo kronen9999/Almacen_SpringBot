@@ -26,7 +26,7 @@ public class VentasController {
     private final VentasServiceImp ventasServiceImp;
 
     @PostMapping
-    public ResponseEntity<VentaResponse> registrarProducto (@RequestBody VentaRequest request)
+    public ResponseEntity<VentaResponse> registrarProducto (@Valid @RequestBody VentaRequest request)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(ventasServiceImp.registrar(request ));
     }
