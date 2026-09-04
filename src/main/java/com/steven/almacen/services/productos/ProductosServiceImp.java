@@ -50,6 +50,7 @@ public class ProductosServiceImp implements ProductosService{
         return productoMapper.entidadAResponse(obtenerProductoOException(id));
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ProductosResponse registrar(ProductosRequest request) {
         Producto producto = productoMapper.requestAEntidad(request, Categoria.obtenerCategoriaPorDescripcion(request.categoria()));
@@ -61,6 +62,7 @@ public class ProductosServiceImp implements ProductosService{
         return productoMapper.entidadAResponse(producto);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ProductosResponse actualizar(ProductosRequest request, Long id) {
 

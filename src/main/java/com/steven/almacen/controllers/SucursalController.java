@@ -5,6 +5,7 @@ import com.steven.almacen.dto.sucursales.SucursalRequest;
 import com.steven.almacen.dto.sucursales.SucursalResponse;
 import com.steven.almacen.services.sucursales.SucursalService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class SucursalController {
     }
 
     @PostMapping
-    public ResponseEntity<SucursalResponse> registrar(@RequestBody SucursalRequest request) {
+    public ResponseEntity<SucursalResponse> registrar(@Valid @RequestBody SucursalRequest request) {
 
         return ResponseEntity.ok(service.registrar(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SucursalResponse> actualizar(@RequestBody SucursalRequest request, @PathVariable @Positive Long id) {
+    public ResponseEntity<SucursalResponse> actualizar(@Valid @RequestBody SucursalRequest request, @PathVariable @Positive Long id) {
 
         return ResponseEntity.ok(service.actualizar(request,id));
 

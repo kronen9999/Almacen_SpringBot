@@ -39,6 +39,7 @@ public class SucursalesServicioImp implements  SucursalService{
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public SucursalResponse registrar(SucursalRequest request) {
         log.info("Registrando una nueva sucursal");
@@ -49,6 +50,7 @@ public class SucursalesServicioImp implements  SucursalService{
         return mapper.entidadAResponse(sucursal);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public SucursalResponse actualizar(SucursalRequest request, Long id) {
         Sucursal sucursal=obtenerSucursalException(id);

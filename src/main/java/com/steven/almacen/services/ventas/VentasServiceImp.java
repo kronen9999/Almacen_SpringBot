@@ -61,7 +61,7 @@ public class VentasServiceImp implements VentasService{
 
     }
 
-
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public VentaResponse registrar(VentaRequest request) {
 
@@ -91,6 +91,7 @@ public class VentasServiceImp implements VentasService{
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public VentaResponse cancelar(Long id) {
 
@@ -122,6 +123,7 @@ public class VentasServiceImp implements VentasService{
                 () -> new RecursoNoEncontradoException("No se encontro la sucursal con el id proporcionado : "+id )
         );
     }
+
 
     private Producto buscarProductoPorId(Long id)
     {
